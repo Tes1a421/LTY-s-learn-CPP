@@ -358,11 +358,18 @@ int main()
 // }
 
 
+
 #include<iostream>
 #include"Sales_item.h"
 //#include cstdlib
 using std::cout;
 using std::endl;
+	//2.4.4
+	// constexpr int *np = nullptr;	//np是一个指向整数的常量指针，其值为空
+	// int j = 0;
+	// constexpr int i = 42;
+	// //i 和 j 都必须定义在函数体之外
+	
 int main()
 {
 //练习2.5
@@ -456,5 +463,80 @@ int main()
 
 // 	r = &i;
 // 	*r = 0;
+
+//const 的引用
+	// const int ci = 1024;
+	// const int &r1 = ci; // true ：引用机器对应的对象的都是常量
+	// r1 = 42 ; // flase ：r1 是对常量的引用
+	// int &r2 = ci ; //false : 试图让一个非常量引用指向一个常量对象
+
+//初始化和最const的引用
+	// int i = 42;
+	// const int &r1 = i ; //允许将const int &绑定到一个普通int对象上
+	// const int &r2 = 42; //true：r2是一个常量引用
+	// const int &r3 = r1 * 2; //true：r3是一个常量引用
+	// int &r4 = r1 *2; //false：r4是一个普通的非常量引用1
+
+	// int i = 42 ;
+	// int &r1 = i; // 引用r1 绑定对象i
+	// const int &r2 = i; //r2也绑定对象i，但是不允许通过r2修改i的值
+	// r1 = 0; // r1并非常量，i的值修改为0
+	// r2 = 0; //false：r2是一个常量引用
+
+//const 指针
+	// int errNumb = 0;
+	// int *const curErr = &errNumb;	//curErr 将一直指向errNumb
+	// const double pi = 3.141559 ;
+	// const double *const pip = &pi;	//pip是一个指向常量对象的常量指针
+
+	// *pip = 2.72;	//false ：pip是一个指向常量的指针
+	// 				//如果curErr所指的的对象（也就是errNumb）的值不为0
+	// if (*curErr)
+	// {
+	// 	errorHandler(); 		//未查到相关解释
+	// 	*curErr = 0;	//ture：把curErr所指的对象重置
+	// }
+
+//顶层const
+	// int i = 0;
+	// int *const p1 = &i;	 //不能改变p1的值，这是一个顶层const
+	// const int ci = 42;	//不能改变ci的值，这是一个顶层const
+	// const int *p2  = &ci;	//允许改变p2的值，这是一个底层const
+	// const int *const p3 = p2;	//靠右的const是顶层const，靠左的是底层cosnt
+	// const int &r = ci;	//用于声明引用的const都是底层const
+
+	// i = ci;		//ture:拷贝ci的值，ci是一个顶层const，对此操作无影响
+	// p2 = p3;	//ture：p2和p3指向的对象类型想用，p3顶层const的部分不影响
+
+	// // int *p = p3;	//flase:p3包含底层const的定义，而p没有
+	// p2 = p3;
+	// p2 = &i;	//ture:int*能转化为const int*
+	// // int &r = ci;	//false:普通的int&不能绑定到int常量上
+	// const int &r2 = i;	//ture:const int& 可以绑定到一个普通int上	
+	
+//practice  2.30 
+	// const int v2 = 0;	//顶层const
+	// int v1 = v2;  
+	// int *p1 = &v1 ,&r1 = v1;
+	// const int *p2 = &v2, *const p3 =&r1, &r2 = v2;	//p2是顶层const,p3是底层const
+
+	// r1 = v2;
+	// p1 = p2;
+	// p2 = p1;
+	// p1 = p3;
+	// p2 = p3;
+
+//2.4.4constexper和常量表达式
+	// constexpr int mf = 20;
+	// constexpr int limit = mf + 1;
+	// //constexpr int sz = size();	//只有当size是一个constexpr函数时才是一条正确的声明语句
+
+	// const int *p = nullptr;		//p是一个指向整数的常量指针，指向常量的指针
+	// constexpr int *q = nullptr;	//q是一个指向整数的常量指针，常量指针，（顶层const）
+
+
+	// constexpr const int *p = &i;	//p是常量指针，指向整型常量i
+	// constexpr int *p1 = &j; 		//p1是常量指针，指向整数j
+	
 }  
 	
